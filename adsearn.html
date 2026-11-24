@@ -1,0 +1,217 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FF Diamond Center - Demo</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;
+ font-family:Arial,sans-serif;
+ background:#10131c;
+ color:white;
+}
+header{
+ background:#191e2b;
+ padding:20px;
+ text-align:center;
+ border-bottom:2px solid #ff9b24;
+}
+header h1{color:#ffad36;margin:0}
+header p{color:#aaa;margin-bottom:0}
+.notice{
+ background:#382b15;
+ color:#ffd58d;
+ text-align:center;
+ padding:12px;
+ font-size:13px;
+}
+.container{
+ max-width:950px;
+ margin:auto;
+ padding:25px 15px;
+}
+h2{color:#ffad36}
+.packages{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(145px,1fr));
+ gap:15px;
+}
+.package{
+ background:#1c2231;
+ border:1px solid #343d50;
+ border-radius:12px;
+ padding:20px 10px;
+ text-align:center;
+ transition:.2s;
+}
+.package:hover{
+ transform:translateY(-4px);
+ border-color:#ffad36;
+}
+.diamond{font-size:30px}
+.package h3{margin:10px 0;color:#fff}
+.package p{color:#aaa;font-size:13px}
+button{
+ border:0;
+ background:#ff9b24;
+ color:#171717;
+ font-weight:bold;
+ padding:12px 20px;
+ border-radius:7px;
+ cursor:pointer;
+}
+button:hover{background:#ffc15c}
+.package button{width:100%}
+.panel{
+ display:none;
+ margin-top:25px;
+ background:#1c2231;
+ padding:25px;
+ border-radius:12px;
+}
+input,select{
+ width:100%;
+ padding:14px;
+ margin:10px 0 18px;
+ border-radius:7px;
+ border:1px solid #444e62;
+ background:#111722;
+ color:white;
+}
+label{color:#ddd}
+#result{
+ display:none;
+ margin-top:20px;
+ padding:20px;
+ background:#173b2c;
+ border:1px solid #319d69;
+ border-radius:10px;
+ text-align:center;
+}
+footer{
+ text-align:center;
+ color:#777;
+ padding:30px;
+ font-size:13px;
+}
+</style>
+</head>
+<body>
+
+<header>
+ <h1>💎 FF DIAMOND CENTER</h1>
+ <p>Free Fire Diamond Packages</p>
+</header>
+
+<div class="notice">
+ UNOFFICIAL DEMO WEBSITE — No real diamonds or top-ups are provided.
+</div>
+
+<div class="container">
+ <h2>💎 Select Diamond Package</h2>
+ <div class="packages" id="packages"></div>
+
+ <div class="panel" id="formPanel">
+  <h2>Player Information</h2>
+  <p id="selectedPackage"></p>
+
+  <form id="playerForm">
+   <label>Free Fire Player UID</label>
+   <input id="uid" type="text" placeholder="Enter your Game UID" required>
+
+   <label>Region</label>
+   <select id="region" required>
+    <option value="">Select Region</option>
+    <option>India</option>
+    <option>Europe</option>
+    <option>Singapore</option>
+    <option>Bangladesh</option>
+    <option>Nepal</option>
+    <option>Indonesia</option>
+    <option>Middle East</option>
+    <option>Other</option>
+   </select>
+
+   <button type="submit">Confirm Request</button>
+  </form>
+
+  <div id="result">
+   <h2>✅ Demo Request Received!</h2>
+   <p>Your demo request has been submitted.</p>
+   <p>Selected package: <b id="resultPackage"></b></p>
+   <p>Player UID: <b id="resultUID"></b></p>
+   <p>Region: <b id="resultRegion"></b></p>
+   <h3>Demo delivery period: Within 30 days</h3>
+   <p>No actual diamonds will be delivered. This is only a website demonstration.</p>
+  </div>
+ </div>
+</div>
+
+<footer>
+ FF Diamond Center · Unofficial Demo Project
+</footer>
+
+<script>
+const packages=[
+ {diamonds:25},
+ {diamonds:50},
+ {diamonds:100},
+ {diamonds:310},
+ {diamonds:520},
+ {diamonds:1060},
+ {diamonds:2180},
+ {diamonds:5600},
+ {diamonds:11200}
+];
+
+let selected=null;
+
+const packageContainer=document.getElementById("packages");
+
+packages.forEach(item=>{
+ const card=document.createElement("div");
+ card.className="package";
+ card.innerHTML=`
+  <div class="diamond">💎</div>
+  <h3>${item.diamonds} Diamonds</h3>
+  <p>Free Demo Package</p>
+  <button type="button">Confirm</button>
+ `;
+ card.querySelector("button").onclick=()=>{
+  selected=item.diamonds;
+  document.getElementById("selectedPackage").textContent=
+   "Selected: "+selected+" Diamonds";
+  document.getElementById("formPanel").style.display="block";
+  document.getElementById("result").style.display="none";
+  document.getElementById("playerForm").reset();
+  document.getElementById("formPanel").scrollIntoView({
+   behavior:"smooth"
+  });
+ };
+ packageContainer.appendChild(card);
+});
+
+document.getElementById("playerForm").onsubmit=function(e){
+ e.preventDefault();
+
+ const uid=document.getElementById("uid").value.trim();
+ const region=document.getElementById("region").value;
+
+ if(!selected || !uid || !region)return;
+
+ document.getElementById("resultPackage").textContent=
+  selected+" Diamonds";
+ document.getElementById("resultUID").textContent=uid;
+ document.getElementById("resultRegion").textContent=region;
+
+ document.getElementById("result").style.display="block";
+ document.getElementById("result").scrollIntoView({
+  behavior:"smooth"
+ });
+};
+</script>
+</body>
+</html>
